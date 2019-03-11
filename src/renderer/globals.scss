@@ -1,0 +1,16 @@
+@import url("https://use.typekit.net/wdd4uyt.css");
+
+// Gibson; weights 300, 400, 700
+$font-body: canada-type-gibson, sans-serif;
+
+// Lean Foreword
+@font-face {
+  font-family: "Lean Foreword";
+  src: url("~@/assets/fonts/Lean-Foreword.otf") format("otf");
+  // ~@/assets/fonts/fontName.ttf
+}
+$font-logo: 'Lean Foreword';
+
+$color-dark-gray: #2c2f33;
+$color-light-gray: #484848;
+$color-indigo: #6f00ff;
