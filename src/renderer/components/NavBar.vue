@@ -5,10 +5,10 @@
         <router-link class="navbar-item" to="/">
           <h1 class="nav-title">Retrograde</h1>
         </router-link>
-        <router-link class="navbar-item" to="/library" id="library">
+        <router-link class="navbar-item" to="/" id="library">
           <h1 class="nav-text">LIBRARY</h1>
         </router-link>
-        <router-link class="navbar-item" to="/">
+        <router-link class="navbar-item" to="/playlists">
           <h1 class="nav-text">PLAYLISTS</h1>
         </router-link>
         <router-link class="navbar-item" to="/">
@@ -27,21 +27,12 @@
 
 <script>
   export default {
-    data () {
-      return {
-        electron: process.versions.electron,
-        name: this.$route.name,
-        node: process.versions.node,
-        path: this.$route.path,
-        platform: require('os').platform(),
-        vue: require('vue/package.json').version
-      }
-    }
+    name: 'nav-bar'
   }
 </script>
 
 <style lang="scss">
-  #nav-wrapper {
+  .navbar {
     box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.31);
   }
 

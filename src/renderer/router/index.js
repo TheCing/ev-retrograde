@@ -16,6 +16,11 @@ export default new Router({
       component: require('@/components/HomePage').default
     },
     {
+      path: '/playlists',
+      name: 'playlists',
+      component: require('@/components/Playlists').default
+    },
+    {
       path: '*',
       redirect: '/'
     }
