@@ -12,6 +12,13 @@
             <a class="console-link"><router-link to="/home"><img src="static/images/SNES.png" alt="SNES"></router-link></a>
             <a class="console-link"><router-link to="/home"><img src="static/images/GB.png" alt="GB"></router-link></a>
             <a class="console-link"><router-link to="/home"><img src="static/images/Genesis.png" alt="Genesis"></router-link></a>
+            <a class="console-link"><router-link to="/home"><img src="static/images/Atari2600.png" alt="Genesis"></router-link></a>
+            <a class="console-link"><router-link to="/home"><img src="static/images/Atari5600.png" alt="Genesis"></router-link></a>
+            <a class="console-link"><router-link to="/home"><img src="static/images/Atari7200.png" alt="Genesis"></router-link></a>
+            <a class="console-link"><router-link to="/home"><img src="static/images/FamicomDisk.png" alt="Genesis"></router-link></a>
+            <a class="console-link"><router-link to="/home"><img src="static/images/GameGear.png" alt="Genesis"></router-link></a>
+            <a class="console-link"><router-link to="/home"><img src="static/images/N64.png" alt="Genesis"></router-link></a>
+            <a class="console-link"><router-link to="/home"><img src="static/images/NDS.png" alt="Genesis"></router-link></a>
           </div>
         </div>
         <div class="column results-view-wrapper">
@@ -27,16 +34,17 @@
 
 <script>
   import NavBar from './NavBar'
+  import SideBar from './SideBar'
 
-  export default {
-    name: 'home',
-    components: { NavBar },
-    methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
+    export default {
+      name: 'home',
+      components: { NavBar, SideBar },
+      methods: {
+        open (link) {
+          this.$electron.shell.openExternal(link)
+        }
       }
     }
-  }
 </script>
 
 <style lang="scss">
