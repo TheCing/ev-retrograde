@@ -1,5 +1,6 @@
 <template>
   <div id="home-page">
+    <intro-modal></intro-modal>
     <nav-bar></nav-bar>
     <div class="home-wrapper">
       <!-- <div class="section">
@@ -35,10 +36,11 @@
 <script>
   import NavBar from './NavBar'
   import SideBar from './SideBar'
+  import IntroModal from './IntroModal'
 
   export default {
     name: 'home',
-    components: { NavBar, SideBar },
+    components: { NavBar, SideBar, IntroModal },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
