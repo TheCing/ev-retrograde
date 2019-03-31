@@ -1,6 +1,6 @@
 <template>
   <div id="home-page">
-    <intro-modal></intro-modal>
+    <!-- <intro-modal></intro-modal> -->
     <nav-bar></nav-bar>
     <div class="home-wrapper">
       <!-- <div class="section">
@@ -9,17 +9,17 @@
       <div class="columns">
         <div class="column is-narrow console-bar-wrapper">
           <div class="console-bar">
-            <a class="console-link is-selected"><router-link to="/home"><img src="static/images/NES.png" alt="NES"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/SNES.png" alt="SNES"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/GB.png" alt="GB"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/Genesis.png" alt="Genesis"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/Atari2600.png" alt="Atari 2600"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/Atari5200.png" alt="Atari 5200"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/Atari7800.png" alt="Atari 7800"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/FamicomDisk.png" alt="Famicom Disk System"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/GameGear.png" alt="Sega Game Gear"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/N64.png" alt="Nintendo 64"></router-link></a>
-            <a class="console-link"><router-link to="/home"><img src="static/images/NEOGEO.png" alt="Neo Geo Pocket"></router-link></a>
+            <a class="console-link is-selected" id='nes' @click="setActive()"><router-link to="/home"><img src="static/images/NES.png" alt="NES"></router-link></a>
+            <a class="console-link" id='snes' @click="setActive()"><router-link to="/home"><img src="static/images/SNES.png" alt="SNES"></router-link></a>
+            <a class="console-link" id='dmg' @click="setActive()"><router-link to="/home"><img src="static/images/GB.png" alt="GB"></router-link></a>
+            <a class="console-link" id='gen' @click="setActive()"><router-link to="/home"><img src="static/images/Genesis.png" alt="Genesis"></router-link></a>
+            <a class="console-link" id='at2600' @click="setActive()"><router-link to="/home"><img src="static/images/Atari2600.png" alt="Atari 2600"></router-link></a>
+            <a class="console-link" id='at5200' @click="setActive()"><router-link to="/home"><img src="static/images/Atari5200.png" alt="Atari 5200"></router-link></a>
+            <a class="console-link" id='at7800' @click="setActive()"><router-link to="/home"><img src="static/images/Atari7800.png" alt="Atari 7800"></router-link></a>
+            <a class="console-link" id='fcds' @click="setActive()"><router-link to="/home"><img src="static/images/FamicomDisk.png" alt="Famicom Disk System"></router-link></a>
+            <a class="console-link" id='gg' @click="setActive()"><router-link to="/home"><img src="static/images/GameGear.png" alt="Sega Game Gear"></router-link></a>
+            <a class="console-link" id='n64' @click="setActive()"><router-link to="/home"><img src="static/images/N64.png" alt="Nintendo 64"></router-link></a>
+            <a class="console-link" id='ng' @click="setActive()"><router-link to="/home"><img src="static/images/NEOGEO.png" alt="Neo Geo Pocket"></router-link></a>
           </div>
         </div>
         <div class="column results-view-wrapper">
@@ -42,8 +42,15 @@
     name: 'home',
     components: { NavBar, SideBar, IntroModal },
     methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
+      setActive () {
+        let el = event.currentTarget
+        let selected = document.getElementsByClassName('is-selected')[0]
+        if (!el.classList.contains('is-selected')) {
+          if (selected !== undefined) selected.classList.remove('is-selected')
+          el.classList.add('is-selected')
+        } else if (el.classList.contains('is-selected')) {
+          el.classList.remove('is-selected')
+        }
       }
     }
   }
@@ -61,7 +68,7 @@
   }
 
   .columns {
-    height: -webkit-fill-available;
+    // height: -webkit-fill-available;
   }
 
   .console-bar {
