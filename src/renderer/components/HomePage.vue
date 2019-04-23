@@ -9,18 +9,19 @@
       <div class="columns">
         <div class="column is-narrow console-bar-wrapper">
           <div class="console-bar">
-            <a class="console-link" id='NES' @click="setActive()"><router-link to="/home"><img src="static/images/NES.png" alt="NES"></router-link></a>
-            <a class="console-link" id='SNES' @click="setActive()"><router-link to="/home"><img src="static/images/SNES.png" alt="SNES"></router-link></a>
-            <a class="console-link" id='GB' @click="setActive()"><router-link to="/home"><img src="static/images/GB.png" alt="GB"></router-link></a>
-            <a class="console-link" id='gen' @click="setActive()"><router-link to="/home"><img src="static/images/Genesis.png" alt="Genesis"></router-link></a>
-            <a class="console-link" id='at2600' @click="setActive()"><router-link to="/home"><img src="static/images/Atari2600.png" alt="Atari 2600"></router-link></a>
-            <a class="console-link" id='at5200' @click="setActive()"><router-link to="/home"><img src="static/images/Atari5200.png" alt="Atari 5200"></router-link></a>
-            <a class="console-link" id='at7800' @click="setActive()"><router-link to="/home"><img src="static/images/Atari7800.png" alt="Atari 7800"></router-link></a>
-            <a class="console-link" id='fcds' @click="setActive()"><router-link to="/home"><img src="static/images/FamicomDisk.png" alt="Famicom Disk System"></router-link></a>
-            <a class="console-link" id='gg' @click="setActive()"><router-link to="/home"><img src="static/images/GameGear.png" alt="Sega Game Gear"></router-link></a>
-            <a class="console-link" id='n64' @click="setActive()"><router-link to="/home"><img src="static/images/N64.png" alt="Nintendo 64"></router-link></a>
-            <a class="console-link" id='ng' @click="setActive()"><router-link to="/home"><img src="static/images/NEOGEO.png" alt="Neo Geo Pocket"></router-link></a>
+            <a class="console-link" id='NES' title="Nintendo Entertainment System" @click="setActive()"><router-link to="/home"><img src="static/images/NES.png" alt="NES"></router-link></a>
+            <a class="console-link" id='SNES' title="Super Nintendo Entertainment System" @click="setActive()"><router-link to="/home"><img src="static/images/SNES.png" alt="SNES"></router-link></a>
+            <a class="console-link" id='GB' title="Nintendo Game Boy" @click="setActive()"><router-link to="/home"><img src="static/images/GB.png" alt="GB"></router-link></a>
+            <a class="console-link" id='gen' title="Sega Genesis | Sega Mega Drive" @click="setActive()"><router-link to="/home"><img src="static/images/Genesis.png" alt="Genesis"></router-link></a>
+            <a class="console-link" id='at2600' title="Atari 2600" @click="setActive()"><router-link to="/home"><img src="static/images/Atari2600.png" alt="Atari 2600"></router-link></a>
+            <a class="console-link" id='at5200' title="Atari 5200" @click="setActive()"><router-link to="/home"><img src="static/images/Atari5200.png" alt="Atari 5200"></router-link></a>
+            <a class="console-link" id='at7800' title="Atari 7800" @click="setActive()"><router-link to="/home"><img src="static/images/Atari7800.png" alt="Atari 7800"></router-link></a>
+            <a class="console-link" id='fcds' title="Famicom Disk System" @click="setActive()"><router-link to="/home"><img src="static/images/FamicomDisk.png" alt="Famicom Disk System"></router-link></a>
+            <a class="console-link" id='gg' title="Sega Game Gear" @click="setActive()"><router-link to="/home"><img src="static/images/GameGear.png" alt="Sega Game Gear"></router-link></a>
+            <a class="console-link" id='n64' title="Nintendo 64" @click="setActive()"><router-link to="/home"><img src="static/images/N64.png" alt="Nintendo 64"></router-link></a>
+            <a class="console-link" id='ng' title="Neo Geo Pocket" @click="setActive()"><router-link to="/home"><img src="static/images/NEOGEO.png" alt="Neo Geo Pocket"></router-link></a>
           </div>
+          <span class="console-bar-toggle" @click="toggleConsoleBar()"></span>
         </div>
         <div class="column results-view-wrapper">
           <div class="section results-view">
@@ -59,6 +60,8 @@
                 </div>
               </div>
             </div>
+            <div class="add-title-tip"><span>Add Title</span></div>
+            <div class="add-title-button" @mouseover="showTooltip()"><span>+</span></div>
           </div>
         </div>
       </div>
@@ -89,7 +92,7 @@
         if (!el.classList.contains('is-selected')) {
           if (selected !== undefined) selected.classList.remove('is-selected')
           el.classList.add('is-selected')
-          title.innerText = el.id
+          title.innerText = el.title
           console.log(el.id)
           this.$store.dispatch('setSystem', 1)
           console.log(this.$store.state.Systems.currentSystem)
@@ -114,7 +117,6 @@
             }
           })
           .catch(function (error) {
-            // handle error
             console.log(error)
           })
         setTimeout(function () {
@@ -129,6 +131,14 @@
               console.log(error)
             })
         }, 1000)
+      },
+      toggleConsoleBar () {
+        let el = document.querySelector('.console-bar-wrapper')
+        el.classList.toggle('is-bar-hidden')
+      },
+      showTooltip () {
+        let el = document.querySelector('.add-title-tip')
+        el.classList.add('is-tip-active')
       }
     }
   }
@@ -139,10 +149,36 @@
     color: white;
 
     .console-bar-wrapper {
+      position: relative;
       background-color: $color-light-gray;
       padding-right: 0;
       padding-top: 1.5em;
       padding-bottom: 10em;
+      transition: margin-left 0.5s ease;
+
+      &.is-bar-hidden {
+        margin-left: -5em;
+      }
+
+      .console-bar-toggle {
+        width: 20px;
+        height: 30px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border: 1px solid $color-dark-gray;
+        background-color: $color-light-gray;
+        position: absolute;
+        right: -1.25em;
+        top: 45vh;
+        cursor: pointer;
+
+        &:before {
+          content: "\003E";
+          color: lighten($color-light-gray, 30%);
+          margin-left: 2px;
+          font-weight: 100;
+        }
+      }
     }
   }
 
@@ -172,6 +208,8 @@
     background-color: $color-dark-gray;
 
     .results-view {
+      // position: relative;
+
       .results-title {
         text-transform: uppercase;
         font-family: $font-body;
@@ -192,6 +230,53 @@
 
         a {
           margin-top: 10px;
+        }
+      }
+
+      .add-title-tip {
+        position: fixed;
+        bottom: 0.45em;
+        right: 3.15em;
+        width: 100px;
+        height: 50px;
+        padding: 4px;
+        margin-right: -5em;
+        visibility: hidden;
+        transition: all 0.5s ease;
+
+        &.is-tip-active {
+          visibility: visible;
+          margin-right: 0;
+        }
+
+        span {
+          background-color: $color-light-gray;
+          padding: 4px 8px;
+          box-shadow: 0 0 2px #111;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+        }
+      }
+
+      .add-title-button {
+        position: fixed;
+        bottom: 1em;
+        right: 1em;
+        width: 50px;
+        height: 50px;
+        border-radius: 100px;
+        background-color: $color-light-gray;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+
+        span {
+          font-weight: 100;
+          font-size: 2em;
+        }
+
+        &:hover {
+          box-shadow: 0 0 2px #111;
         }
       }
     }
