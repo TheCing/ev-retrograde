@@ -61,7 +61,8 @@
               </div>
             </div>
             <div class="add-title-tip"><span>Add Title</span></div>
-            <div class="add-title-button" @mouseover="showTooltip()"><span>+</span></div>
+            <div class="add-title-button" @click="showAddModal()" @mouseover="showTooltip()" @mouseout="hideTooltip()"><span>+</span></div>
+            <div class="add-title-cover"></div>
           </div>
         </div>
       </div>
@@ -73,12 +74,14 @@
   import NavBar from './NavBar'
   import SideBar from './SideBar'
   import IntroModal from './IntroModal'
+  import AddModal from './AddModal'
 
   const axios = require('axios')
+  const { dialog } = require('electron').remote
 
   export default {
     name: 'home',
-    components: { NavBar, SideBar, IntroModal },
+    components: { NavBar, SideBar, IntroModal, AddModal },
     computed: {
       system () {
         return this.$store.state.Systems.currentSystem
@@ -139,6 +142,14 @@
       showTooltip () {
         let el = document.querySelector('.add-title-tip')
         el.classList.add('is-tip-active')
+      },
+      hideTooltip () {
+        let el = document.querySelector('.add-title-tip')
+        el.classList.remove('is-tip-active')
+      },
+      showAddModal () {
+        console.log('showing add modal')
+        console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
       }
     }
   }
@@ -233,6 +244,16 @@
         }
       }
 
+      .add-title-cover {
+        position: fixed;
+        bottom: 1em;
+        right: -1em;
+        width: 50px;
+        height: 50px;
+        background-color: $color-dark-gray;
+        z-index: 0;
+      }
+
       .add-title-tip {
         position: fixed;
         bottom: 0.45em;
@@ -240,12 +261,10 @@
         width: 100px;
         height: 50px;
         padding: 4px;
-        margin-right: -5em;
-        visibility: hidden;
+        margin-right: -6em;
         transition: all 0.5s ease;
 
         &.is-tip-active {
-          visibility: visible;
           margin-right: 0;
         }
 
@@ -269,6 +288,7 @@
         display: flex;
         justify-content: center;
         cursor: pointer;
+        z-index: 2;
 
         span {
           font-weight: 100;
