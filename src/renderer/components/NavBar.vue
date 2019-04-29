@@ -11,7 +11,7 @@
         <router-link class="navbar-item" to="/playlists">
           <h1 class="nav-text">PLAYLISTS</h1>
         </router-link>
-        <router-link class="navbar-item" to="/">
+        <!-- <router-link class="navbar-item" to="/">
           <h1 class="nav-text">SAVES</h1>
         </router-link>
         <router-link class="navbar-item" to="/">
@@ -19,7 +19,7 @@
         </router-link>
         <router-link class="navbar-item" to="/">
           <h1 class="nav-text">SEARCH</h1>
-        </router-link>
+        </router-link> -->
       </div>
     </nav>
   </div>
