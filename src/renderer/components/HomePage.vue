@@ -209,12 +209,10 @@
         // console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
       },
       launchEmulator () {
-        alert('opening')
         var cp = require('child_process')
         cp.exec('nano test.txt')
       },
       openContextMenu () {
-        alert('Test')
         let el = event.currentTarget.children[0]
         // console.log(el.src)
         let id = el.src.replace('https://cdn.thegamesdb.net/images/original/boxart/front/', '')
