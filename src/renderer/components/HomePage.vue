@@ -58,6 +58,14 @@
                     <img src="#">
                     <h2 class="game-title">SimCity</h2>
                   </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">River City Ransom</h2>
+                  </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">Final Fight Guy</h2>
+                  </div>
                 </div>
                 <div class="column">
                   <div class="game-card">
@@ -69,6 +77,14 @@
                     <img src="#">
                     <h2 class="game-title">The Legend of Zelda</h2>
                   </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">NBA Jam</h2>
+                  </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">Tetris Attack</h2>
+                  </div>
                 </div>
                 <div class="column">
                   <div class="game-card">
@@ -79,6 +95,10 @@
                     <img src="#">
                     <h2 class="game-title">Milon's Secret Castle</h2>
                   </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">Sonic CD</h2>
+                  </div>
                 </div>
                 <div class="column">
                   <div class="game-card">
@@ -88,6 +108,10 @@
                   <div class="game-card">
                     <img src="#">
                     <h2 class="game-title">Bomberman</h2>
+                  </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">Mega Man: The Wily Wars</h2>
                   </div>
                 </div>
               </div>
@@ -241,7 +265,7 @@
         }, 2000)
       }
     },
-    updated: function () {
+    beforeUpdate: function () {
       let els = document.querySelectorAll('.game-card .game-title')
       for (let el of els) {
         let matches = []
@@ -307,6 +331,7 @@
         position: fixed;
         left: 5em;
         top: 45vh;
+        padding-top: 0.25em;
         cursor: pointer;
         transition: margin-left 0.5s ease;
 
@@ -371,6 +396,13 @@
         background-color: $color-light-gray;
         border-radius: 4px;
         text-align: center;
+        transition: all 0.5s;
+
+        &:hover {
+          box-shadow: 0 0 20px #121212;
+          cursor: pointer;
+          transform: scale(1.05);
+        }
 
         a {
           margin-top: 10px;
@@ -385,6 +417,8 @@
         height: 50px;
         background-color: $color-dark-gray;
         z-index: 0;
+        //
+        display: none;
       }
 
       .add-title-tip {
@@ -396,6 +430,8 @@
         padding: 4px;
         margin-right: -6em;
         transition: all 0.5s ease;
+        //
+        display: none;
 
         &.is-tip-active {
           margin-right: -0.5em;
@@ -422,6 +458,8 @@
         justify-content: center;
         cursor: pointer;
         z-index: 2;
+        //
+        display: none;
 
         span {
           font-weight: 100;
