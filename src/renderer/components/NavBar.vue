@@ -5,12 +5,12 @@
         <router-link @click="getContent()" class="navbar-item" to="/">
           <h1 class="nav-title">Retrograde</h1>
         </router-link>
-        <router-link @click="getContent()" class="navbar-item" to="/" id="library">
+        <!-- <router-link @click="getContent()" class="navbar-item" to="/" id="library">
           <h1 class="nav-text">LIBRARY</h1>
-        </router-link>
-        <router-link @click="getContent()" class="navbar-item" to="/playlists">
+        </router-link> -->
+        <!-- <router-link @click="getContent()" class="navbar-item" to="/playlists">
           <h1 class="nav-text">PLAYLISTS</h1>
-        </router-link>
+        </router-link> -->
         <!-- <router-link class="navbar-item" to="/">
           <h1 class="nav-text">SAVES</h1>
         </router-link>

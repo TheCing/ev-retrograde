@@ -50,66 +50,66 @@
               </div> -->
               <div class="columns">
                 <div class="column">
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Super Mario Bros.</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">SimCity</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">River City Ransom</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Final Fight Guy</h2>
                   </div>
                 </div>
                 <div class="column">
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Super Mario Bros. 2</h2>
                     <!-- <a class="button is-small is-dark" @click="getContent()">Load Content</a> -->
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">The Legend of Zelda</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">NBA Jam</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Tetris Attack</h2>
                   </div>
                 </div>
                 <div class="column">
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Super Mario Bros. 3</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Milon's Secret Castle</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Sonic CD</h2>
                   </div>
                 </div>
                 <div class="column">
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Super Mario World</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Bomberman</h2>
                   </div>
-                  <div class="game-card">
+                  <div class="game-card" @click="openContextMenu()" @contextmenu="openContextMenu()">
                     <img src="#">
                     <h2 class="game-title">Mega Man: The Wily Wars</h2>
                   </div>
@@ -133,7 +133,8 @@
   import AddModal from './AddModal'
 
   const axios = require('axios')
-  const { dialog } = require('electron').remote
+  // const { dialog } = require('electron').remote
+  const { shell } = require('electron')
 
   export default {
     name: 'home',
@@ -152,9 +153,9 @@
           if (selected !== undefined) selected.classList.remove('is-selected')
           el.classList.add('is-selected')
           title.innerText = el.title
-          console.log(el.id)
+          // console.log(el.id)
           this.$store.dispatch('setSystem', 1)
-          console.log(this.$store.state.Systems.currentSystem)
+          // console.log(this.$store.state.Systems.currentSystem)
         } else if (el.classList.contains('is-selected')) {
           el.classList.remove('is-selected')
           title.innerText = 'All Systems'
@@ -163,14 +164,14 @@
       getContent () {
         let el = event.currentTarget.previousElementSibling
         let matches = []
-        console.log('looking for matches of: ' + el.innerText)
+        // console.log('looking for matches of: ' + el.innerText)
         this.$http.get('https://api.thegamesdb.net/Games/ByGameName?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&name=' + el.innerText)
           .then(function (response) {
             // handle success
-            console.log(response)
+            // console.log(response)
             for (let game of response.data.data.games) {
               if (game.game_title === el.innerText) {
-                console.log(game.game_title)
+                // console.log(game.game_title)
                 matches.push(game.id)
               }
             }
@@ -181,7 +182,7 @@
         setTimeout(function () {
           axios.get('https://api.thegamesdb.net/Games/Images?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&games_id=' + matches[0] + '&filter%5Btype%5D=boxart')
             .then(function (response) {
-              console.log(response)
+              // console.log(response)
               let imgUrl = response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename
               // console.log(response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename)
               el.previousElementSibling.src = imgUrl
@@ -204,22 +205,36 @@
         el.classList.remove('is-tip-active')
       },
       showAddModal () {
-        console.log('showing add modal')
-        console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
+        // console.log('showing add modal')
+        // console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
+      },
+      launchEmulator () {
+        alert('opening')
+        var cp = require('child_process')
+        cp.exec('nano test.txt')
+      },
+      openContextMenu () {
+        alert('Test')
+        let el = event.currentTarget.children[0]
+        // console.log(el.src)
+        let id = el.src.replace('https://cdn.thegamesdb.net/images/original/boxart/front/', '')
+        id = id.substring(0, id.indexOf('-'))
+        // console.log(id)
+        shell.openExternal('https://thegamesdb.net/game.php?id=' + id)
       },
       switchPlatform (id) {
         let els = document.querySelectorAll('.game-card .game-title')
         for (let el of els) {
-          console.log('checking if ' + el.innerText + ' matches current platform ' + id)
+          // console.log('checking if ' + el.innerText + ' matches current platform ' + id)
           this.$http.get('https://api.thegamesdb.net/Games/ByGameName?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&name=' + el.innerText)
             .then(function (response) {
               // handle success
-              console.log(response)
+              // console.log(response)
               for (let game of response.data.data.games) {
                 if (game.game_title === el.innerText) {
-                  console.log(game.game_title)
+                  // console.log(game.game_title)
                   if (game.platform === id) {
-                    console.log('matches')
+                    // console.log('matches')
                     el.parentElement.style.display = 'none'
                   }
                 }
@@ -236,14 +251,14 @@
       let els = document.querySelectorAll('.game-card .game-title')
       for (let el of els) {
         let matches = []
-        console.log('looking for matches of: ' + el.innerText)
+        // console.log('looking for matches of: ' + el.innerText)
         this.$http.get('https://api.thegamesdb.net/Games/ByGameName?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&name=' + el.innerText)
           .then(function (response) {
             // handle success
-            console.log(response)
+            // console.log(response)
             for (let game of response.data.data.games) {
               if (game.game_title === el.innerText) {
-                console.log(game.game_title)
+                // console.log(game.game_title)
                 matches.push(game.id)
               }
             }
@@ -254,7 +269,7 @@
         setTimeout(function () {
           axios.get('https://api.thegamesdb.net/Games/Images?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&games_id=' + matches[0] + '&filter%5Btype%5D=boxart')
             .then(function (response) {
-              console.log(response)
+              // console.log(response)
               let imgUrl = response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename
               // console.log(response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename)
               el.previousElementSibling.src = imgUrl
@@ -269,14 +284,14 @@
       let els = document.querySelectorAll('.game-card .game-title')
       for (let el of els) {
         let matches = []
-        console.log('looking for matches of: ' + el.innerText)
+        // console.log('looking for matches of: ' + el.innerText)
         this.$http.get('https://api.thegamesdb.net/Games/ByGameName?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&name=' + el.innerText)
           .then(function (response) {
             // handle success
-            console.log(response)
+            // console.log(response)
             for (let game of response.data.data.games) {
               if (game.game_title === el.innerText) {
-                console.log(game.game_title)
+                // console.log(game.game_title)
                 matches.push(game.id)
               }
             }
@@ -287,7 +302,7 @@
         setTimeout(function () {
           axios.get('https://api.thegamesdb.net/Games/Images?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&games_id=' + matches[0] + '&filter%5Btype%5D=boxart')
             .then(function (response) {
-              console.log(response)
+              // console.log(response)
               let imgUrl = response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename
               // console.log(response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename)
               el.previousElementSibling.src = imgUrl
