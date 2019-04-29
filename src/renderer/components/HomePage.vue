@@ -1,6 +1,7 @@
 <template>
   <div id="home-page">
     <!-- <intro-modal></intro-modal> -->
+    <!-- <add-modal></add-modal> -->
     <nav-bar></nav-bar>
     <div class="home-wrapper">
       <!-- <div class="section">
@@ -12,7 +13,11 @@
             <a class="console-link" id='NES' title="Nintendo Entertainment System" @click="setActive()"><router-link to="/home"><img src="static/images/NES.png" alt="NES"></router-link></a>
             <a class="console-link" id='SNES' title="Super Nintendo Entertainment System" @click="setActive()"><router-link to="/home"><img src="static/images/SNES.png" alt="SNES"></router-link></a>
             <a class="console-link" id='GB' title="Nintendo Game Boy" @click="setActive()"><router-link to="/home"><img src="static/images/GB.png" alt="GB"></router-link></a>
+            <a class="console-link" id='GBC' title="Nintendo Game Boy Color" @click="setActive()"><router-link to="/home"><img src="static/images/GBC.png" alt="GBC"></router-link></a>
+            <a class="console-link" id='GBA' title="Nintendo Game Boy Advance" @click="setActive()"><router-link to="/home"><img src="static/images/GBA.png" alt="GBA"></router-link></a>
             <a class="console-link" id='gen' title="Sega Genesis | Sega Mega Drive" @click="setActive()"><router-link to="/home"><img src="static/images/Genesis.png" alt="Genesis"></router-link></a>
+            <a class="console-link" id='32x' title="Sega 32X" @click="setActive()"><router-link to="/home"><img src="static/images/32x.png" alt="32x"></router-link></a>
+            <a class="console-link" id='segacd' title="Sega CD" @click="setActive()"><router-link to="/home"><img src="static/images/SegaCD.png" alt="Sega CD"></router-link></a>
             <a class="console-link" id='at2600' title="Atari 2600" @click="setActive()"><router-link to="/home"><img src="static/images/Atari2600.png" alt="Atari 2600"></router-link></a>
             <a class="console-link" id='at5200' title="Atari 5200" @click="setActive()"><router-link to="/home"><img src="static/images/Atari5200.png" alt="Atari 5200"></router-link></a>
             <a class="console-link" id='at7800' title="Atari 7800" @click="setActive()"><router-link to="/home"><img src="static/images/Atari7800.png" alt="Atari 7800"></router-link></a>
@@ -28,34 +33,61 @@
             <!-- <h1 class="results-title">{{ system }}</h1> -->
             <h1 class="results-title">All Systems</h1>
             <hr>
-            <div class="section">
+            <div class="section results-section">
+              <!-- <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                  <article class="tile is-child box">One</article>
+                </div>
+                <div class="tile is-parent">
+                  <article class="tile is-child box">Two</article>
+                </div>
+                <div class="tile is-parent">
+                  <article class="tile is-child box">Three</article>
+                </div>
+                <div class="tile is-parent">
+                  <article class="tile is-child box">Four</article>
+                </div>
+              </div> -->
               <div class="columns">
                 <div class="column">
                   <div class="game-card">
                     <img src="#">
                     <h2 class="game-title">Super Mario Bros.</h2>
-                    <a class="button is-small is-dark" @click="getContent()">Load Content</a>
+                  </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">SimCity</h2>
                   </div>
                 </div>
                 <div class="column">
                   <div class="game-card">
                     <img src="#">
                     <h2 class="game-title">Super Mario Bros. 2</h2>
-                    <a class="button is-small is-dark" @click="getContent()">Load Content</a>
+                    <!-- <a class="button is-small is-dark" @click="getContent()">Load Content</a> -->
+                  </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">The Legend of Zelda</h2>
                   </div>
                 </div>
                 <div class="column">
                   <div class="game-card">
                     <img src="#">
                     <h2 class="game-title">Super Mario Bros. 3</h2>
-                    <a class="button is-small is-dark" @click="getContent()">Load Content</a>
+                  </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">Milon's Secret Castle</h2>
                   </div>
                 </div>
                 <div class="column">
                   <div class="game-card">
                     <img src="#">
                     <h2 class="game-title">Super Mario World</h2>
-                    <a class="button is-small is-dark" @click="getContent()">Load Content</a>
+                  </div>
+                  <div class="game-card">
+                    <img src="#">
+                    <h2 class="game-title">Bomberman</h2>
                   </div>
                 </div>
               </div>
@@ -150,6 +182,96 @@
       showAddModal () {
         console.log('showing add modal')
         console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
+      },
+      switchPlatform (id) {
+        let els = document.querySelectorAll('.game-card .game-title')
+        for (let el of els) {
+          console.log('checking if ' + el.innerText + ' matches current platform ' + id)
+          this.$http.get('https://api.thegamesdb.net/Games/ByGameName?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&name=' + el.innerText)
+            .then(function (response) {
+              // handle success
+              console.log(response)
+              for (let game of response.data.data.games) {
+                if (game.game_title === el.innerText) {
+                  console.log(game.game_title)
+                  if (game.platform === id) {
+                    console.log('matches')
+                    el.parentElement.style.display = 'none'
+                  }
+                }
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }
+        this.setActive()
+      }
+    },
+    mounted: function () {
+      let els = document.querySelectorAll('.game-card .game-title')
+      for (let el of els) {
+        let matches = []
+        console.log('looking for matches of: ' + el.innerText)
+        this.$http.get('https://api.thegamesdb.net/Games/ByGameName?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&name=' + el.innerText)
+          .then(function (response) {
+            // handle success
+            console.log(response)
+            for (let game of response.data.data.games) {
+              if (game.game_title === el.innerText) {
+                console.log(game.game_title)
+                matches.push(game.id)
+              }
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+        setTimeout(function () {
+          axios.get('https://api.thegamesdb.net/Games/Images?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&games_id=' + matches[0] + '&filter%5Btype%5D=boxart')
+            .then(function (response) {
+              console.log(response)
+              let imgUrl = response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename
+              // console.log(response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename)
+              el.previousElementSibling.src = imgUrl
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }, 2000)
+      }
+    },
+    updated: function () {
+      let els = document.querySelectorAll('.game-card .game-title')
+      for (let el of els) {
+        let matches = []
+        console.log('looking for matches of: ' + el.innerText)
+        this.$http.get('https://api.thegamesdb.net/Games/ByGameName?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&name=' + el.innerText)
+          .then(function (response) {
+            // handle success
+            console.log(response)
+            for (let game of response.data.data.games) {
+              if (game.game_title === el.innerText) {
+                console.log(game.game_title)
+                matches.push(game.id)
+              }
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+        setTimeout(function () {
+          axios.get('https://api.thegamesdb.net/Games/Images?apikey=999d0bbc99aef99152169563a1b38b4de54c1ec486a2d705310b1708b3aca831&games_id=' + matches[0] + '&filter%5Btype%5D=boxart')
+            .then(function (response) {
+              console.log(response)
+              let imgUrl = response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename
+              // console.log(response.data.data.base_url.original + response.data.data.images[matches[0]]['0'].filename)
+              el.previousElementSibling.src = imgUrl
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }, 2000)
       }
     }
   }
@@ -158,6 +280,7 @@
 <style lang="scss">
   .home-wrapper {
     color: white;
+    font-family: $font-body;
 
     .console-bar-wrapper {
       position: relative;
@@ -169,6 +292,10 @@
 
       &.is-bar-hidden {
         margin-left: -5em;
+
+        .console-bar-toggle {
+          margin-left: -5em;
+        }
       }
 
       .console-bar-toggle {
@@ -176,15 +303,16 @@
         height: 30px;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
-        border: 1px solid $color-dark-gray;
         background-color: $color-light-gray;
-        position: absolute;
-        right: -1.25em;
+        position: fixed;
+        left: 5em;
         top: 45vh;
         cursor: pointer;
+        transition: margin-left 0.5s ease;
 
         &:before {
           content: "\003E";
+          padding-top: 0.2em;
           color: lighten($color-light-gray, 30%);
           margin-left: 2px;
           font-weight: 100;
@@ -229,14 +357,19 @@
         text-align: center;
       }
 
+      .results-section {
+        padding-top: 1em;
+      }
+
       hr {
         margin: 0rem 4rem;
       }
 
       .game-card {
-        padding: 1em 1em;
+        padding-bottom: 0.5em;
+        margin: 1em 0;
         background-color: $color-light-gray;
-        border-radius: 2px;
+        border-radius: 4px;
         text-align: center;
 
         a {
@@ -265,7 +398,7 @@
         transition: all 0.5s ease;
 
         &.is-tip-active {
-          margin-right: 0;
+          margin-right: -0.5em;
         }
 
         span {

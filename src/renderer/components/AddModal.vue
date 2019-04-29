@@ -13,15 +13,21 @@ export default {
 <style lang="scss" scoped>
   .add-modal-wrapper {
     position: absolute;
-    top: 0;
+    top: 50%;
+    margin-left: auto;
+    margin-right: auto;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 50%;
+    height: 50%;
     z-index: 1000;
-    background-color: $color-dark-gray;
+    background-color: $color-light-gray;
     font-family: $font-body;
     overflow: hidden;
     display: flex;
     align-items: center;
+    justify-content: center;
+    color: white;
   }
 </style>
