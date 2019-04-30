@@ -4,7 +4,7 @@
 
 #### Installation
 
-- Download latest build from Releases, extract, and run the .app file in your extracted folder.
+- Download latest build from [Releases](https://github.com/TheCing/ev-retrograde/releases), extract, and run the .app file in your extracted folder.
 
 #### Local Development
 
