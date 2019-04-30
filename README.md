@@ -1,8 +1,12 @@
-# ev-retrograde
+# Retrograde
 
-> An electron-vue project
+> An emulator front-end wannabe built in Electron-Vue
 
-#### Build Setup
+#### Installation
+
+- Download latest build from Releases, extract, and run the .app file in your extracted folder.
+
+#### Local Development
 
 ``` bash
 # install dependencies
